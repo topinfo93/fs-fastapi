@@ -34,7 +34,11 @@ class Settings(BaseSettings):
     @classmethod
     def _use_psycopg_driver(cls, value: str | PostgresDsn) -> str:
         database_url = str(value)
-        for scheme in ("postgres://", "postgresql://"):
+        for scheme in (
+            "postgresql+psycopg2://",
+            "postgres://",
+            "postgresql://",
+        ):
             if database_url.startswith(scheme):
                 return database_url.replace(scheme, "postgresql+psycopg://", 1)
         return database_url
